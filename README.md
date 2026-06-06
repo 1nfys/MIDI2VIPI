@@ -1,6 +1,7 @@
 # midi2vipi
 
 воспроизводит midi-файлы через системный синтезатор или как макрос для virtual piano. управление глобальными хоткеями без переключения окна.
+бла бла бла ложные детекты рандомных антивирусов вы поняли
 
 ## использование
 
@@ -35,6 +36,7 @@
 # midi2vipi
 
 plays midi files through the system synthesizer or as a macro for virtual piano. controlled with global hotkeys without switching windows.
+bla bla bla false detections of random av you know
 
 ## usage
 
