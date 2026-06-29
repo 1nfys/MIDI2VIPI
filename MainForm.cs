@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Drawing;
@@ -87,11 +87,12 @@ namespace MIDI2VIPI
             SuspendLayout();
             Padding = new Padding(15, 0, 15, 15);
 
-            var accentLine = new Panel { BackColor = Theme.Accent, Height = 3, Dock = DockStyle.Top };
+            var accentLine = new Panel { BackColor = Theme.Accent, Height = 2, Dock = DockStyle.Top };
 
             var header = new Panel { Height = 56, Dock = DockStyle.Top, BackColor = Color.Transparent };
-            var lblTitle = new Label { Text = "MIDI2VIPI", Font = Theme.Title, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 12) };
-            var lblSub = new Label { Text = "MIDI macro & synth", UseMnemonic = false, Font = Theme.Main, ForeColor = Theme.InkDim, AutoSize = true, Location = new Point(140, 21) };
+            var lblTitle = new Label { Text = "MIDI2VIPI", Font = Theme.Title, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 12), UseCompatibleTextRendering = true };
+            var lblSub = new Label { Text = "by 1nfys", UseMnemonic = false, Font = Theme.Main, ForeColor = Theme.InkDim, AutoSize = true, UseCompatibleTextRendering = true };
+            lblSub.Location = new Point(lblTitle.Right + 8, lblTitle.Bottom - lblSub.PreferredHeight - 5);
 
             Image ghIcon = null;
             try
@@ -118,7 +119,7 @@ namespace MIDI2VIPI
             var bottom = new DarkPanel { BackColor = Theme.Surface, Height = 126, Dock = DockStyle.Bottom, Padding = new Padding(15) };
 
             var progRow = new Panel { Height = 26, Dock = DockStyle.Top, BackColor = Color.Transparent };
-            _lblTime = new Label { Text = "0:00 / 0:00", Font = Theme.MonoSm, ForeColor = Theme.InkDim, AutoSize = false, Width = 90, TextAlign = ContentAlignment.MiddleRight, Dock = DockStyle.Right, Padding = new Padding(0, 0, 0, 0) };
+            _lblTime = new Label { Text = "0:00 / 0:00", Font = Theme.MonoSm, ForeColor = Theme.InkDim, AutoSize = false, Width = 90, TextAlign = ContentAlignment.MiddleRight, Dock = DockStyle.Right, Padding = new Padding(0, 0, 0, 0), UseCompatibleTextRendering = true };
             _sliderProg = new DarkTrackBar { Dock = DockStyle.Fill, Height = 20 };
             _sliderProg.ValueChanged += delegate (double v) { if (_eng.Duration > 0) _eng.SeekReq = v * _eng.Duration; };
             progRow.Controls.Add(_sliderProg);
@@ -140,7 +141,7 @@ namespace MIDI2VIPI
             for (int i = 0; i < 3; i++) slRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33f));
 
             var pVol = new Panel { Dock = DockStyle.Fill, BackColor = Color.Transparent };
-            _lblVol = new Label { Text = "VOL 100%", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft };
+            _lblVol = new Label { Text = "VOL 100%", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft, UseCompatibleTextRendering = true };
             _sliderVol = new DarkTrackBar { Minimum = 0, Maximum = 100, Value = 100 };
             _sliderVol.ValueChanged += delegate (double v) { _lblVol.Text = "VOL " + (int)v + "%"; _eng.Volume = v / 100; };
             pVol.Controls.AddRange(new Control[] { _lblVol, _sliderVol });
@@ -151,10 +152,10 @@ namespace MIDI2VIPI
             };
 
             var pBpm = new Panel { Dock = DockStyle.Fill, BackColor = Color.Transparent };
-            _lblBpm = new Label { Text = "BPM 120", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft };
+            _lblBpm = new Label { Text = "BPM 120", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft, UseCompatibleTextRendering = true };
             _sliderBpm = new DarkTrackBar { Minimum = 40, Maximum = 280, Value = 120 };
             _sliderBpm.ValueChanged += delegate (double v) { _lblBpm.Text = "BPM " + (int)v; _eng.Bpm = (int)v; };
-            var btnRBpm = new AccentButton { Text = "R", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Font = new Font("Segoe UI", 7, FontStyle.Bold), Radius = 4 };
+            var btnRBpm = new AccentButton { Text = "R", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Font = Theme.MiniBold, Radius = 0 };
             btnRBpm.ClickEvent += delegate { _sliderBpm.Value = _initialBpm; _lblBpm.Text = "BPM " + _initialBpm; _eng.Bpm = _initialBpm; };
             pBpm.Controls.AddRange(new Control[] { _lblBpm, _sliderBpm, btnRBpm });
             pBpm.Resize += delegate
@@ -165,10 +166,10 @@ namespace MIDI2VIPI
             };
 
             var pTrans = new Panel { Dock = DockStyle.Fill, BackColor = Color.Transparent };
-            _lblTrans = new Label { Text = "SHIFT 0", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft };
+            _lblTrans = new Label { Text = "SHIFT 0", Font = Theme.Bold, ForeColor = Theme.InkDim, AutoSize = false, TextAlign = ContentAlignment.MiddleLeft, UseCompatibleTextRendering = true };
             _sliderTrans = new DarkTrackBar { Minimum = -24, Maximum = 24, Value = 0 };
             _sliderTrans.ValueChanged += delegate (double v) { int val = (int)v; string sign = val > 0 ? "+" : ""; _lblTrans.Text = "SHIFT " + sign + val; _eng.Transpose = val; };
-            var btnRTrans = new AccentButton { Text = "R", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Font = new Font("Segoe UI", 7, FontStyle.Bold), Radius = 4 };
+            var btnRTrans = new AccentButton { Text = "R", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Font = Theme.MiniBold, Radius = 0 };
             btnRTrans.ClickEvent += delegate { _sliderTrans.Value = 0; _lblTrans.Text = "SHIFT 0"; _eng.Transpose = 0; };
             pTrans.Controls.AddRange(new Control[] { _lblTrans, _sliderTrans, btnRTrans });
             pTrans.Resize += delegate
@@ -192,14 +193,14 @@ namespace MIDI2VIPI
             var fileRow = new Panel { Height = 34, Dock = DockStyle.Top, BackColor = Color.Transparent };
             var btnOpen = new AccentButton { Text = "Open MIDI", Size = new Size(110, 30), Location = new Point(0, 0) };
             btnOpen.ClickEvent += delegate { BrowseFile(); };
-            _lblFile = new Label { Text = "No file loaded", Font = Theme.Main, ForeColor = Theme.InkDim, AutoSize = false, Location = new Point(120, 5), Size = new Size(400, 20), Anchor = AnchorStyles.Left | AnchorStyles.Right };
+            _lblFile = new Label { Text = "No file loaded", Font = Theme.Main, ForeColor = Theme.InkDim, AutoSize = false, Location = new Point(120, 5), Size = new Size(400, 20), Anchor = AnchorStyles.Left | AnchorStyles.Right, UseCompatibleTextRendering = true };
             fileRow.Controls.AddRange(new Control[] { btnOpen, _lblFile });
 
             var sep = new Panel { Height = 1, Dock = DockStyle.Top, BackColor = Theme.Border };
             var sepSpacer = new Panel { Height = 16, Dock = DockStyle.Top, BackColor = Color.Transparent };
 
             var tracksHeader = new Panel { Height = 28, Dock = DockStyle.Top, BackColor = Color.Transparent };
-            var lblTracks = new Label { Text = "Tracks", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 3) };
+            var lblTracks = new Label { Text = "Tracks", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 3), UseCompatibleTextRendering = true };
             var btnAll = new AccentButton { Text = "All", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Size = new Size(42, 22) };
             var btnNone = new AccentButton { Text = "None", BaseColor = Theme.Surface2, HoverCol = Theme.Border, ForeColor = Theme.Ink, Size = new Size(42, 22) };
             btnAll.ClickEvent += delegate { SetAllTracks(true); };
@@ -207,8 +208,8 @@ namespace MIDI2VIPI
             tracksHeader.Controls.AddRange(new Control[] { lblTracks, btnNone, btnAll });
             tracksHeader.Resize += delegate { btnAll.Location = new Point(tracksHeader.Width - 42, 0); btnNone.Location = new Point(tracksHeader.Width - 90, 0); };
 
-            var macroRow = new Panel { Height = 30, Dock = DockStyle.Bottom, BackColor = Color.Transparent };
-            var lblMacro = new Label { Text = "Macro hotkey", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 6) };
+            var macroRow = new Panel { Height = 38, Dock = DockStyle.Bottom, BackColor = Color.Transparent };
+            var lblMacro = new Label { Text = "Macro hotkey", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(0, 9) };
             _entHotkey = new TextBox
             {
                 Text = "-",
@@ -216,13 +217,13 @@ namespace MIDI2VIPI
                 Height = 22,
                 Font = Theme.Mono,
                 BackColor = Theme.Surface2,
-                ForeColor = Theme.Ink,
+                ForeColor = Theme.Accent,
                 BorderStyle = BorderStyle.FixedSingle,
                 TextAlign = HorizontalAlignment.Center,
-                Location = new Point(96, 4),
+                Location = new Point(135, 6),
                 MaxLength = 1
             };
-            var lblPause = new Label { Text = "Pause hotkey", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(146, 6) };
+            var lblPause = new Label { Text = "Pause hotkey", Font = Theme.Bold, ForeColor = Theme.Ink, AutoSize = true, Location = new Point(190, 9) };
             _entPauseKey = new TextBox
             {
                 Text = "=",
@@ -230,13 +231,13 @@ namespace MIDI2VIPI
                 Height = 22,
                 Font = Theme.Mono,
                 BackColor = Theme.Surface2,
-                ForeColor = Theme.Ink,
+                ForeColor = Theme.Accent,
                 BorderStyle = BorderStyle.FixedSingle,
                 TextAlign = HorizontalAlignment.Center,
-                Location = new Point(236, 4),
+                Location = new Point(325, 6),
                 MaxLength = 1
             };
-            _lblWarn = new Label { Text = "", Font = new Font("Segoe UI", 8.5f, FontStyle.Bold), ForeColor = Theme.Warn, AutoSize = true, Location = new Point(286, 7) };
+            _lblWarn = new Label { Text = "", Font = Theme.WarnFont, ForeColor = Theme.Warn, AutoSize = true, Location = new Point(380, 9), UseCompatibleTextRendering = true };
             macroRow.Controls.AddRange(new Control[] { lblMacro, _entHotkey, lblPause, _entPauseKey, _lblWarn });
 
             var tracksContainer = new DarkPanel { Dock = DockStyle.Fill, BackColor = Theme.BG, Radius = 6, Padding = new Padding(2) };
@@ -272,7 +273,14 @@ namespace MIDI2VIPI
             Controls.Add(accentLine);
 
             ResumeLayout(true);
-            this.Shown += delegate { this.ActiveControl = null; };
+            this.Shown += delegate {
+                lblSub.Location = new Point(lblTitle.Right - 3, lblTitle.Bottom - lblSub.Height - 3);
+                _entHotkey.Location = new Point(lblMacro.Right + 8, 6);
+                lblPause.Location = new Point(_entHotkey.Right + 24, 9);
+                _entPauseKey.Location = new Point(lblPause.Right + 8, 6);
+                _lblWarn.Location = new Point(_entPauseKey.Right + 16, 9);
+                this.ActiveControl = null;
+            };
         }
 
         private void BrowseFile()

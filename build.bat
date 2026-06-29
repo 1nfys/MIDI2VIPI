@@ -18,7 +18,7 @@ if not exist "%CSC%" (
 
 echo [INFO] Compiling MIDI2VIPI.exe using native .NET Framework compiler...
 
-"%CSC%" /nologo /target:winexe /out:MIDI2VIPI.exe /win32icon:app_icon.ico /optimize+ *.cs
+"%CSC%" /nologo /target:winexe /out:MIDI2VIPI.exe /win32icon:app_icon.ico /resource:Ithaca-LVB75.ttf /optimize+ *.cs
 
 if %errorlevel% neq 0 (
     echo.
